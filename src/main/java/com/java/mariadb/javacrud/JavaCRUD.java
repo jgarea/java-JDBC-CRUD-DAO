@@ -13,8 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import model.Empleado;
 
 /**
@@ -35,6 +34,17 @@ public class JavaCRUD {
         try {
             int n = dao.add(emp);
             System.out.println("El número de registros insertados es "+n);
+            
+            List<Empleado> empleados = dao.getAll();
+            
+            if(empleados.isEmpty())
+                System.out.println("La lista está vacia");
+            else
+                empleados.forEach(System.out::println); //expresión lambda 
+            
+            Empleado emp1=dao.getById(1);
+            System.out.println("\n"+ emp1);
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
