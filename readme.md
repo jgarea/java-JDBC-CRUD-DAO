@@ -4,6 +4,7 @@ Desarrollo de un sistema CRUD con altas, bajas y modificaciones desde JAVA media
 * Patrón DAO(desacoplar la
 aplicación de la forma de
 acceder a los datos.) 
+* Pool de conexiones (hikariCP)
 * Utilizando la interfaz PreparedStatement para evitar problemas de inyección SQL
 * Utilizando un menú como selector de opciones.
 
