@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.java.mariadb.javacrud;
 
 import dao.EmpleadoDao;
@@ -14,8 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import model.Empleado;
 
@@ -24,8 +18,13 @@ import model.Empleado;
 
 
 /**
- *
- * @author Juan
+ * Clase que representa el menú principal de una aplicación de gestión de empleados. 
+ * 
+ * Permite al usuario insertar un nuevo empleado, listar todos los empleados y buscar un empleado por ID.
+ * Utiliza un objeto de la clase KeyBoardReader para leer la entrada del usuario, una interfaz EmpleadoDao
+ * para realizar operaciones en la base de datos y una clase Empleado para representar a los empleados.
+ * 
+ * @author Juan Eugenio Antón Area
  */
 public class Menu {
     private KeyBoardReader reader;
@@ -183,6 +182,27 @@ public class Menu {
         }
     }
     
+    public void delete(){
+        System.out.println("\nBORRADO DE UN EMPLEADO");
+        System.out.println("------------------------\n");
+        try {
+            System.out.print("Introduzca el ID del empleado a borrar: ");
+            int id=reader.nextInt();
+            
+            System.out.printf("Está usted seguro de eliminar al empleado con ID=%s?(s/n): ",id);
+            String borrar=reader.nextLine();
+            
+            if(borrar.equalsIgnoreCase("s")){
+                dao.delete(id);
+                System.out.printf("El empleado con ID %s se ha borrado\n",id);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error consultando registros de la base de datos vuelva a intentarlo de nuevo.");
+            e.printStackTrace();
+        }
+        System.out.println("");
+    }
+    
     public void init(){
         int opcion;
         do{
@@ -201,7 +221,9 @@ public class Menu {
                 case 4: 
                     update();
                     break;
-                case 5: break;
+                case 5: 
+                    delete();
+                    break;
                 case 0:
                     System.out.println("\nSaliendo del programa...\n");
                     break;
@@ -212,6 +234,7 @@ public class Menu {
         }while(opcion!=0);
         
     }
+    
     public void menu(){
         System.out.println("SISTEMA DE GESTION DE EMPLEADOS");
         System.out.println("===============================\n");
