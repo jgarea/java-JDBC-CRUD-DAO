@@ -92,7 +92,7 @@ public class EmpleadoDaoImpl implements EmpleadoDao {
 
     @Override
     public int update(Empleado emp) throws SQLException {
-        String sql="""
+        String sql = """
                     UPDATE empleado SET
                         nombre = ?, apellidos = ?,
                         fecha_nacimiento = ?,
@@ -100,26 +100,30 @@ public class EmpleadoDaoImpl implements EmpleadoDao {
                     WHERE id_empleado = ?
                    """;
         int result;
-        
-        try(Connection conn = MyDataSource.getConnection();
-            PreparedStatement pstm = conn.prepareStatement(sql)){
-            
+
+        try ( Connection conn = MyDataSource.getConnection();  PreparedStatement pstm = conn.prepareStatement(sql)) {
+
             pstm.setString(1, emp.getNombre());
             pstm.setString(2, emp.getApellidos());
             pstm.setDate(3, Date.valueOf(emp.getFechaNacimiento()));
             pstm.setString(4, emp.getPuesto());
             pstm.setString(5, emp.getEmail());
             pstm.setInt(6, emp.getId_empleado());
-            
-            result=pstm.executeUpdate();
+
+            result = pstm.executeUpdate();
         }
-        
+
         return result;
     }
 
     @Override
     public void delete(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM empleado WHERE id_empleado = ?";
+        try ( Connection conn = MyDataSource.getConnection();  PreparedStatement pstm = conn.prepareStatement(sql)) {
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+
+        }
     }
 
     /**

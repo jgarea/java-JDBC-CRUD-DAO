@@ -28,38 +28,44 @@ public class JavaCRUD {
 
     public static void testDao() {
         EmpleadoDao dao = EmpleadoDaoImpl.getInstance();
-        
+
         Empleado emp = new Empleado("Jose Luis", "Rodriguez Pereira", LocalDate.of(1990, Month.FEBRUARY, 4),
                 "Profesor", "joropere@gmail.com");
         try {
             int n = dao.add(emp);
-            System.out.println("El número de registros insertados es "+n);
-            
+            System.out.println("El número de registros insertados es " + n);
+
             List<Empleado> empleados = dao.getAll();
-            
-            if(empleados.isEmpty())
+
+            if (empleados.isEmpty()) {
                 System.out.println("La lista está vacia");
-            else
+            } else {
                 empleados.forEach(System.out::println); //expresión lambda 
-            
-            Empleado emp1=dao.getById(1);
-            System.out.println("\n"+ emp1);
-            
+            }
+            Empleado emp1 = dao.getById(1);
+            System.out.println("\n" + emp1);
+
             emp1.setFechaNacimiento(LocalDate.of(1992, Month.MARCH, 4));
-            
-            n=dao.update(emp1);
-            
-            emp1= dao.getById(1);
-            
-            System.out.println("\nEmpleado modificado\n"+ emp1);
-            
-            
-            
-            
+
+            n = dao.update(emp1);
+
+            emp1 = dao.getById(1);
+
+            System.out.println("\nEmpleado modificado\n" + emp1);
+
+            dao.delete(1);
+
+            empleados = dao.getAll();
+            if (empleados.isEmpty()) {
+                System.out.println("La lista está vacia");
+            } else {
+                empleados.forEach(System.out::println); //expresión lambda 
+            }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     public static void testPool() {
