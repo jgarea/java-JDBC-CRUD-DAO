@@ -23,7 +23,8 @@ import model.Empleado;
 public class JavaCRUD {
 
     public static void main(String[] args) {
-        testDao();
+        Menu menu= new Menu();
+        menu.init();
     }
 
     public static void testDao() {
