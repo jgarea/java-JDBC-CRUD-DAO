@@ -45,6 +45,17 @@ public class JavaCRUD {
             Empleado emp1=dao.getById(1);
             System.out.println("\n"+ emp1);
             
+            emp1.setFechaNacimiento(LocalDate.of(1992, Month.MARCH, 4));
+            
+            n=dao.update(emp1);
+            
+            emp1= dao.getById(1);
+            
+            System.out.println("\nEmpleado modificado\n"+ emp1);
+            
+            
+            
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

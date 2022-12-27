@@ -92,7 +92,29 @@ public class EmpleadoDaoImpl implements EmpleadoDao {
 
     @Override
     public int update(Empleado emp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql="""
+                    UPDATE empleado SET
+                        nombre = ?, apellidos = ?,
+                        fecha_nacimiento = ?,
+                        puesto = ?, email = ?
+                    WHERE id_empleado = ?
+                   """;
+        int result;
+        
+        try(Connection conn = MyDataSource.getConnection();
+            PreparedStatement pstm = conn.prepareStatement(sql)){
+            
+            pstm.setString(1, emp.getNombre());
+            pstm.setString(2, emp.getApellidos());
+            pstm.setDate(3, Date.valueOf(emp.getFechaNacimiento()));
+            pstm.setString(4, emp.getPuesto());
+            pstm.setString(5, emp.getEmail());
+            pstm.setInt(6, emp.getId_empleado());
+            
+            result=pstm.executeUpdate();
+        }
+        
+        return result;
     }
 
     @Override
